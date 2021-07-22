@@ -20,7 +20,7 @@ dew_point = (c * gamma) / (b - gamma)
 # Sensor needs a moment to gather initial readings
 time.sleep(1)
 
-print("\nTemperature: %0.1f C % temp")
-print("\nHumidity: %0.1f %% humid")
-print("\nDew Point: %0.1f %% dew_point")
-print("\nPressure: %0.1f hPa % pressure")
+print("\nTemperature: %0.1f C" % temp)
+print("\nHumidity: %0.1f %%" % humid)
+print("\nDew Point: %0.1f %%" % dew_point)
+print("\nPressure: %0.1f hPa" % pressure)
