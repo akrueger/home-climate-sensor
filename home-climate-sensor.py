@@ -4,7 +4,7 @@ import board
 from adafruit_bme280 import basic as adafruit_bme280
 
 # Uses board.SCL and board.SDA
-i2c = board.IC2()
+i2c = board.I2C()
 bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
 
 temp = bme280.temperature
@@ -21,6 +21,6 @@ dew_point = (c * gamma) / (b - gamma)
 time.sleep(1)
 
 print("\nTemperature: %0.1f C % temp")
-print("\Humidity: %0.1f %% humid")
+print("\nHumidity: %0.1f %% humid")
 print("\nDew Point: %0.1f %% dew_point")
 print("\nPressure: %0.1f hPa % pressure")
