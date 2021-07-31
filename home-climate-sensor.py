@@ -5,10 +5,10 @@ from adafruit_bme280 import basic as adafruit_bme280
 from ISStreamer.Streamer import Streamer
 
 # --------- Settings ---------
-SENSOR_NAME = "[NAME: SENSOR #]"
-BUCKET_NAME = "[NAME]"
-BUCKET_KEY = "[KEY]"
-ACCESS_KEY = "[KEY]"
+SENSOR_NAME = "os.environ.get('SENSOR_NAME')"
+BUCKET_NAME = "os.environ.get('INITIAL_STATE_BUCKET_NAME')"
+BUCKET_KEY = "os.environ.get('INITIAL_STATE_BUCKET_KEY')"
+ACCESS_KEY = "os.environ.get('INITIAL_STATE_ACCESS_KEY')"
 MINUTES_BETWEEN_READS = 5
 METRIC_UNITS = False
 # ---------------------------------
@@ -17,7 +17,9 @@ METRIC_UNITS = False
 i2c = board.I2C()
 bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
 
-streamer = Streamer(bucket_name=BUCKET_NAME, bucket_key=BUCKET_KEY, access_key=ACCESS_KEY)
+streamer = Streamer(
+    bucket_name=BUCKET_NAME, bucket_key=BUCKET_KEY, access_key=ACCESS_KEY
+)
 
 # Sensor needs a moment to gather initial readings
 time.sleep(1)
@@ -37,13 +39,13 @@ while True:
     except RuntimeError:
         print("RuntimeError, trying again...")
         continue
-                
+
     if METRIC_UNITS:
         streamer.log(SENSOR_NAME + " Temperature(C)", temperature_c)
     else:
         temperature_f = format(temperature_c * 9.0 / 5.0 + 32.0, ".2f")
         streamer.log(SENSOR_NAME + " Temperature(F)", temperature_f)
-        humidity = format(humidity,".2f")
+        humidity = format(humidity, ".2f")
         streamer.log(SENSOR_NAME + " Humidity(%)", humidity)
         streamer.log(SENSOR_NAME + " Dew Point(%)", dew_point)
         streamer.flush()
