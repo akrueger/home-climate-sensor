@@ -1,0 +1,3 @@
+RPi.GPIO
+adafruit-circuitpython-bme280
+ISStreamer

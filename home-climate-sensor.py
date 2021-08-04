@@ -1,14 +1,15 @@
 import time
 import math
+import os
 import board
 from adafruit_bme280 import basic as adafruit_bme280
 from ISStreamer.Streamer import Streamer
 
 # --------- Settings ---------
-SENSOR_NAME = "os.environ.get('SENSOR_NAME')"
-BUCKET_NAME = "os.environ.get('INITIAL_STATE_BUCKET_NAME')"
-BUCKET_KEY = "os.environ.get('INITIAL_STATE_BUCKET_KEY')"
-ACCESS_KEY = "os.environ.get('INITIAL_STATE_ACCESS_KEY')"
+DEVICE_NAME = os.environ.get("BALENA_DEVICE_NAME_AT_INIT")
+BUCKET_NAME = os.environ.get("INITIAL_STATE_BUCKET_NAME")
+BUCKET_KEY = os.environ.get("INITIAL_STATE_BUCKET_KEY")
+ACCESS_KEY = os.environ.get("INITIAL_STATE_ACCESS_KEY")
 MINUTES_BETWEEN_READS = 5
 METRIC_UNITS = False
 # ---------------------------------
@@ -41,12 +42,12 @@ while True:
         continue
 
     if METRIC_UNITS:
-        streamer.log(SENSOR_NAME + " Temperature(C)", temperature_c)
+        streamer.log(DEVICE_NAME + " Temperature(C)", temperature_c)
     else:
         temperature_f = format(temperature_c * 9.0 / 5.0 + 32.0, ".2f")
-        streamer.log(SENSOR_NAME + " Temperature(F)", temperature_f)
+        streamer.log(DEVICE_NAME + " Temperature(F)", temperature_f)
         humidity = format(humidity, ".2f")
-        streamer.log(SENSOR_NAME + " Humidity(%)", humidity)
-        streamer.log(SENSOR_NAME + " Dew Point(%)", dew_point)
+        streamer.log(DEVICE_NAME + " Humidity(%)", humidity)
+        # streamer.log(DEVICE_NAME + " Dew Point(%)", dew_point)
         streamer.flush()
         time.sleep(60 * MINUTES_BETWEEN_READS)

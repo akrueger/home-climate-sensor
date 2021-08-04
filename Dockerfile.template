@@ -1,21 +1,20 @@
 # base-image for python on any machine using a template variable,
 # see more about dockerfile templates here: https://www.balena.io/docs/learn/develop/dockerfile/
 FROM balenalib/%%BALENA_MACHINE_NAME%%-python:3
-# use `install_packages` if you need to install dependencies,
-# for instance if you need git, just uncomment the line below.
-# RUN install_packages git
+
+# use `install_packages` if you need to install dependencies
+RUN install_packages build-essential
 
 # Set our working directory
 WORKDIR /usr/src
 
-# This will copy all files in our root to the working  directory in the container
-COPY . ./
+# Copy requirements.txt first for better cache on later pushes
+COPY requirements.txt requirements.txt
 
-# pip install python deps from requirements.txt on the resin.io build server
-RUN pip3 install adafruit-circuitpython-bme280 ISStreamer
+# pip install python deps from requirements.txt
+RUN pip install -r requirements.txt
 
-# # Enable udevd so that plugged dynamic hardware devices show up in our container.
-# ENV UDEV=1
+# Copy program
+COPY home-climate-sensor.py home-climate-sensor.py
 
-# main.py will run when container starts up on the device
-CMD init.sh
+CMD python home-climate-sensor.py
