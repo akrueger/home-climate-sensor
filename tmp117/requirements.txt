@@ -1,0 +1,3 @@
+RPi.GPIO
+adafruit-circuitpython-tmp117
+ISStreamer

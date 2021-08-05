@@ -8,13 +8,10 @@ RUN install_packages build-essential
 # Set our working directory
 WORKDIR /usr/src
 
-# Copy requirements.txt first for better cache on later pushes
-COPY requirements.txt requirements.txt
+# Copy sensor files
+COPY bme280 .
 
 # pip install python deps from requirements.txt
 RUN pip install -r requirements.txt
 
-# Copy program
-COPY home-climate-sensor.py home-climate-sensor.py
-
-CMD python home-climate-sensor.py
+CMD python bme280.py
