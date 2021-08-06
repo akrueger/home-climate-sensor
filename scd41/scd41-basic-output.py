@@ -6,6 +6,7 @@ import adafruit_scd4x
 
 # --------- Settings ---------
 USE_METRIC = os.environ.get("USE_METRIC", "FALSE")
+MINUTES_BETWEEN_READS = float(os.environ.get("MINUTES_BETWEEN_READS", 0.08))
 TEMPERATURE_OFFSET = float(os.environ.get("TEMPERATURE_OFFSET", 0))
 HUMIDITY_OFFSET = float(os.environ.get("HUMIDITY_OFFSET", 0))
 # ---------------------------------
@@ -41,4 +42,4 @@ while True:
         print("CO2: %d ppm" % co2)
         print("Humidity(%)", humidity)
         print("Dew Point(%)", dew_point)
-    time.sleep(1)
+    time.sleep(60 * MINUTES_BETWEEN_READS)
