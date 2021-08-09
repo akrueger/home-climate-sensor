@@ -16,9 +16,7 @@ i2c = board.I2C()
 scd41 = adafruit_scd4x.SCD4X(i2c)
 
 # Set altitude (meters) to home in Austin, TX
-# scd41.altitude = 280
-
-scd41.set_ambient_pressure(1015)
+scd41.altitude = 280
 
 # Sensor needs a moment to gather initial readings
 scd41.start_periodic_measurement()
